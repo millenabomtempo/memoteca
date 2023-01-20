@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Thought } from '../thought';
 import { ThoughtService } from '../thought.service';
@@ -22,20 +22,36 @@ export class CreateThoughtComponent implements OnInit {
   ngOnInit(): void {
 
     this.form = this.formBuilder.group({
-      content: ['Teste'],
-      author: ['Teste'],
+      content: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern(/(.|\s)*\S(.|\s)*/)
+      ])],
+      author: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(3)
+      ])],
       model: ['modelo1']
     })
   }
 
   createThought() {
-    this.service.create(this.form.value).subscribe(() => {
-      this.router.navigate(['/listarPensamento'])
-    })
+    if(this.form.valid) {
+      this.service.create(this.form.value).subscribe(() => {
+        this.router.navigate(['/listarPensamento'])
+      })
+    }
   }
 
   cancel() {
     this.router.navigate(['/listarPensamento'])
+  }
+
+  toggleButton(): string {
+    if(this.form.valid) {
+      return 'botão'
+    } else {
+      return 'botao__desabilitado'
+    }
   }
 
 }

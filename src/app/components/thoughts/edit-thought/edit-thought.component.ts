@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Thought } from '../thought';
 import { ThoughtService } from '../thought.service';
@@ -10,36 +11,47 @@ import { ThoughtService } from '../thought.service';
 })
 export class EditThoughtComponent implements OnInit {
 
-  thought: Thought = {
-    id: 0,
-    content: '',
-    author: '',
-    model: ''
-  }
+  form!: FormGroup
 
   constructor(
     private service: ThoughtService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id')
     this.service.findByID(parseInt(id!)).subscribe((thought) => {
-      this.thought = thought
+      this.form = this.formBuilder.group({
+        id: thought.id,
+        content: [thought.content, Validators.compose([
+          Validators.required,
+          Validators.pattern(/(.|\s)*\S(.|\s)*/)
+        ])],
+        author: [thought.author, Validators.compose([
+          Validators.required,
+          Validators.minLength(3)
+        ])],
+        model: [thought.model]
+      })
     })
   }
 
   editThought() {
-    if (this.thought.id) {
-      this.service.update(this.thought ).subscribe(() => {
-        this.router.navigate(['/listarPensamento'])
-      })
-    }
+    this.service.update(this.form.value).subscribe(() => {
+      this.router.navigate(['/listarPensamento'])
+    })
   }
 
   cancel() {
     this.router.navigate(['/listarPensamento'])
   }
 
+  toggleButton(): string {
+    if(this.form.valid) {
+      return "botao"
+    }
+    else return "botao__desabilitado"
+  }
 }
