@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Thought } from '../thought';
+import { ThoughtService } from '../thought.service';
 
 @Component({
   selector: 'app-list-thoughts',
@@ -7,27 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListThoughtsComponent implements OnInit {
 
-  listThoughts = [
-    {
-      content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.',
-      author: 'Lorem ipsum',
-      model: 'modelo3'
-    },
-    {
-      content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perspiciatis commodi inventore quaerat fugiat doloribus quia amet architecto placeat, voluptatem minima dolorem accusamus eos, nisi autem, accusantium eius voluptates eaque laboriosam. Perspiciatis commodi inventore quaerat fugiat doloribus quia amet architecto placeat, voluptatem minima dolorem accusamus eos.',
-      author: 'Lorem ipsum',
-      model: 'modelo2'
-    },
-    {
-      content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.',
-      author: 'Lorem ipsum',
-      model: 'modelo1'
-    }
-  ]
+  listThoughts: Thought[] = []
 
-  constructor() { }
+  constructor(private service: ThoughtService) { }
 
   ngOnInit(): void {
+    this.service.listAll().subscribe((list) => {
+      this.listThoughts = list
+    })
   }
 
 }

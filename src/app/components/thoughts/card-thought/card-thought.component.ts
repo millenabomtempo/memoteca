@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Thought } from '../thought';
 
 @Component({
   selector: 'app-card-thought',
@@ -7,7 +8,8 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CardThoughtComponent implements OnInit {
 
-  @Input() thought = {
+  @Input() thought: Thought = {
+    id: 0,
     content: 'Conteúdo',
     author: 'Autoria',
     model: 'modelo3'

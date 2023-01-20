@@ -9,6 +9,9 @@ import { CreateThoughtComponent } from './components/thoughts/create-thought/cre
 import { FormsModule } from '@angular/forms';
 import { ListThoughtsComponent } from './components/thoughts/list-thoughts/list-thoughts.component';
 import { CardThoughtComponent } from './components/thoughts/card-thought/card-thought.component';
+import { HttpClientModule } from '@angular/common/http';
+import { DeleteThoughtComponent } from './components/thoughts/delete-thought/delete-thought.component';
+import { EditThoughtComponent } from './components/thoughts/edit-thought/edit-thought.component';
 
 @NgModule({
   declarations: [
@@ -17,12 +20,15 @@ import { CardThoughtComponent } from './components/thoughts/card-thought/card-th
     FooterComponent,
     CreateThoughtComponent,
     ListThoughtsComponent,
-    CardThoughtComponent
+    CardThoughtComponent,
+    DeleteThoughtComponent,
+    EditThoughtComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
