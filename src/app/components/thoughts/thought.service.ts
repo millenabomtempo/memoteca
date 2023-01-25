@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpParams } from '@angular/common/http'
 import { Thought } from './thought';
 import { Observable } from 'rxjs';
 
@@ -12,8 +12,12 @@ export class ThoughtService {
 
   constructor(private http: HttpClient) { }
 
-  listAll(): Observable<Thought[]> {
-    return this.http.get<Thought[]>(this.API)
+  listAll(page: number): Observable<Thought[]> {
+    const itemsPerPage = 6
+
+    let params = new HttpParams().set('_page', page).set('_limit', itemsPerPage)
+
+    return this.http.get<Thought[]>(this.API, { params })
   }
 
   create(thought: Thought): Observable<Thought> {

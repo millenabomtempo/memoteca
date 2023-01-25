@@ -10,12 +10,23 @@ import { ThoughtService } from '../thought.service';
 export class ListThoughtsComponent implements OnInit {
 
   listThoughts: Thought[] = []
+  currentPage = 1
+  hasMoreThoughts = true
 
   constructor(private service: ThoughtService) { }
 
   ngOnInit(): void {
-    this.service.listAll().subscribe((list) => {
+    this.service.listAll(this.currentPage).subscribe((list) => {
       this.listThoughts = list
+    })
+  }
+
+  loadMoreThoughts() {
+    this.service.listAll(++this.currentPage).subscribe(listThoughts => {
+      this.listThoughts.push(...listThoughts)
+      if(!listThoughts.length){
+        this.hasMoreThoughts = false
+      }
     })
   }
 
