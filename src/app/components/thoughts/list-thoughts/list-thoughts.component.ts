@@ -12,17 +12,18 @@ export class ListThoughtsComponent implements OnInit {
   listThoughts: Thought[] = []
   currentPage = 1
   hasMoreThoughts = true
+  filter: string = ''
 
   constructor(private service: ThoughtService) { }
 
   ngOnInit(): void {
-    this.service.listAll(this.currentPage).subscribe((list) => {
+    this.service.listAll(this.currentPage, this.filter).subscribe((list) => {
       this.listThoughts = list
     })
   }
 
   loadMoreThoughts() {
-    this.service.listAll(++this.currentPage).subscribe(listThoughts => {
+    this.service.listAll(++this.currentPage, this.filter).subscribe(listThoughts => {
       this.listThoughts.push(...listThoughts)
       if(!listThoughts.length){
         this.hasMoreThoughts = false
@@ -30,4 +31,12 @@ export class ListThoughtsComponent implements OnInit {
     })
   }
 
+  searchThought() {
+    this.hasMoreThoughts = true
+    this.currentPage = 1;
+    this.service.listAll(this.currentPage, this.filter)
+      .subscribe(listThought => {
+        this.listThoughts = listThought
+      })
+  }
 }

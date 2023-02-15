@@ -12,10 +12,14 @@ export class ThoughtService {
 
   constructor(private http: HttpClient) { }
 
-  listAll(page: number): Observable<Thought[]> {
+  listAll(page: number, filter: string): Observable<Thought[]> {
     const itemsPerPage = 6
 
     let params = new HttpParams().set('_page', page).set('_limit', itemsPerPage)
+
+    if(filter.trim().length > 2) {
+      params = params.set('q', filter)
+    }
 
     return this.http.get<Thought[]>(this.API, { params })
   }
