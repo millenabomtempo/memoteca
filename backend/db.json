@@ -4,30 +4,35 @@
       "id": 1,
       "content": "Que bom que vc veio",
       "author": "Nay",
-      "model": "modelo1"
+      "model": "modelo1",
+      "favorite": true
     },
     {
       "id": 2,
       "content": "Estudando Angular",
       "author": "Dev Alura",
-      "model": "modelo2"
+      "model": "modelo2",
+      "favorite": false
     },
     {
       "id": 3,
       "content": "Angular é o melhor",
       "author": "Nay",
-      "model": "modelo3"
+      "model": "modelo3",
+      "favorite": true
     },
     {
       "content": "Teste",
       "author": "Teste",
       "model": "modelo2",
+      "favorite": false,
       "id": 4
     },
     {
       "content": "Teste Editado",
       "author": "Teste",
       "model": "modelo3",
+      "favorite": false,
       "id": 5
     }
   ]
